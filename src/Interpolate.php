@@ -11,14 +11,15 @@ namespace yuanqing\Interpolate;
 
 class Interpolate
 {
+  private $data;
+
   /**
    * Interpolates values from $data into the $tmpl string
    *
    * @param string $tmpl The string to interpolate values into
-   * @param array $data The values to use for the interpolation
+   * @param array $data Contains the values to use for interpolation
    * @return string
    * @throws InvalidArgumentException
-   * @throws UnexpectedValueException
    */
   public function interpolate($tmpl, array $data)
   {
@@ -26,17 +27,28 @@ class Interpolate
       throw new \InvalidArgumentException('Template could not be converted to string');
     }
     $tmpl = (string) $tmpl;
-    return preg_replace_callback('/{(.+?)}/', function($matches) use ($data) {
-      $keys = explode('.', $matches[1]);
-      $val = $this->followPath($data, $keys);
-      if (is_callable($val)) {
-        $val = call_user_func($val, $data);
-      }
-      if (!$this->isString($val)) {
-        throw new \UnexpectedValueException(sprintf('Value corresponding to the key "%s" could not be converted to string', trim($matches[1])));
-      }
-      return (string) $val;
-    }, $tmpl);
+    $this->data = $data;
+    return preg_replace_callback('/{(.+?)}/', array($this, 'callback'), $tmpl);
+  }
+
+  /**
+   * The callback for preg_replace_callback
+   *
+   * @param array $matches
+   * @return string
+   * @throws UnexpectedValueException
+   */
+  private function callback($matches)
+  {
+    $keys = explode('.', $matches[1]);
+    $val = $this->followPath($this->data, $keys);
+    if (is_callable($val)) {
+      $val = call_user_func($val, $this->data);
+    }
+    if (!$this->isString($val)) {
+      throw new \UnexpectedValueException(sprintf('Value corresponding to the key "%s" could not be converted to string', trim($matches[1])));
+    }
+    return (string) $val;
   }
 
   /**
@@ -45,7 +57,7 @@ class Interpolate
    * @example
    * $data = array('foo' => array('bar' => 'baz');
    * $keys = array('foo', 'bar');
-   * followPath($data, $keys); #=> 'baz'
+   * var_dump($this->followPath($data, $keys)); #=> "baz"
    *
    * @param array $data Array to get the value from
    * @param array $keys Series of keys to follow
@@ -64,7 +76,7 @@ class Interpolate
   }
 
   /**
-   * Returns true if $obj can be cast to string
+   * Returns true if $obj can be converted to string
    *
    * @param mixed $obj
    * @return boolean
