@@ -1,13 +1,11 @@
-# interpolate.php [![Build Status](https://travis-ci.org/yuanqing/interpolate.svg)](https://travis-ci.org/yuanqing/interpolate) [![Coverage Status](https://img.shields.io/coveralls/yuanqing/interpolate.svg?branch=master)](https://coveralls.io/r/yuanqing/interpolate?branch=master)
+# Interpolate.php [![Build Status](https://img.shields.io/travis/yuanqing/interpolate.svg)](https://travis-ci.org/yuanqing/interpolate) [![Coverage Status](https://img.shields.io/coveralls/yuanqing/interpolate.svg)](https://coveralls.io/r/yuanqing/interpolate)
 
 A small PHP package for interpolating values from an array into a template string.
 
-Think of it as [Mustache](http://mustache.github.io/)-lite:
+Think of it as a lightweight alternative to [Mustache](https://github.com/bobthecow/mustache.php):
 
 ```php
-use \yuanqing\Interpolate\Interpolate;
-
-$i = new Interpolate;
+$i = new \yuanqing\Interpolate\Interpolate;
 $tmpl = '{foo.bar}, {foo.baz}!';
 $data = array(
   'foo' => array(
@@ -15,33 +13,41 @@ $data = array(
     'baz' => 'World'
   )
 );
-echo $i->interpolate($tmpl, $data); #=> 'Hello, World!'
+var_dump($i->interpolate($tmpl, $data)); #=> 'Hello, World!'
 ```
 
 ## Usage
 
 1. Tags are enclosed in single braces.
 
-2. Straight-up substitution; no conditional blocks, sections and so forth. Tags can reference nested values in the array (as in the above example).
+2. Straight-up substitution; there are no conditional blocks, sections and so forth.
 
-3. A value to be interpolated may be a function (that returns a string), or an object (that implements `__toString()`):
+3. Tags can reference nested values in the multidimensional array (as in the above example).
 
-```php
-use \yuanqing\Interpolate\Interpolate;
+4. A value to be interpolated can be a [scalar](http://php.net/manual/en/function.is-scalar.php), an object that implements `__toString()`, or a callback that returns a string:
 
-$i = new Interpolate;
-$tmpl = '{baz}';
-$data = array(
-  'foo' => 'Hello',
-  'bar' => 'World',
-  'baz' => function($data) {
-    return sprintf('%s, %s!', $data['foo'], $data['bar']);
-  }
-);
-echo $i->interpolate($tmpl, $data); #=> 'Hello, World!'
-```
+    ```php
+    $i = new \yuanqing\Interpolate\Interpolate;
+    $tmpl = '{baz}';
+    $data = array(
+      'foo' => 'Hello',
+      'bar' => 'World',
+      'baz' => function($data) {
+        return sprintf('%s, %s!', $data['foo'], $data['bar']);
+      }
+    );
+    var_dump($i->interpolate($tmpl, $data)); #=> 'Hello, World!'
+    ```
+
+    Note that the first argument of the callback is the `$data` array.
+
+5. If a value for a tag is not found, the tag will be replaced with an empty string.
+
+(The two examples in this README may be found in the [`examples.php`](https://github.com/yuanqing/interpolate/blob/master/examples.php) file.)
 
 ## Installation
+
+Interpolate.php requires at least PHP 5.3.
 
 ### Install with Composer
 
@@ -57,10 +63,16 @@ echo $i->interpolate($tmpl, $data); #=> 'Hello, World!'
     }
     ```
 
-3. Require the Composer autoloader:
+3. Install dependencies:
+
+    ```
+    $ composer install
+    ```
+
+4. Require the Composer autoloader:
 
     ```php
-    require_once(__DIR__ . '/vendor/autoload.php');
+    require_once __DIR__ . '/vendor/autoload.php';
     ```
 
 ### Install manually
@@ -71,22 +83,26 @@ echo $i->interpolate($tmpl, $data); #=> 'Hello, World!'
     $ git clone https://github.com/yuanqing/interpolate
     ```
 
-    (Or [grab a zip of the latest release](https://github.com/yuanqing/interpolate/releases).)
+    Or just [grab the zip](https://github.com/yuanqing/interpolate/archive/master.zip).
 
-2. Require `Interpolate.php`:
+2. Require [`Interpolate.php`](https://github.com/yuanqing/interpolate/blob/master/src/Interpolate.php):
 
     ```php
-    require_once(__DIR__ . '/src/Interpolate.php');
+    require_once __DIR__ . '/src/Interpolate.php';
     ```
 
 ## Testing
 
 1. Install [PHPUnit](http://phpunit.de/).
 
-2. Clone this repository, and run `phpunit`:
+2. Clone this repository, then run `phpunit`:
 
     ```
     $ git clone https://github.com/yuanqing/interpolate
     $ cd interpolate
     $ phpunit
     ```
+
+## License
+
+MIT license
