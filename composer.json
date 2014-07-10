@@ -1,0 +1,21 @@
+{
+  "name": "yuanqing/interpolate",
+  "description": "Simple string interpolation in PHP.",
+  "keywords": ["string", "interpolate", "interpolation", "string"],
+  "homepage": "https://github.com/yuanqing/interpolate",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Lim Yuan Qing",
+      "email": "hello@yuanqing.sg"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "yuanqing\\Interpolate\\": "src/"
+    }
+  },
+  "require": {
+    "php": ">=5.3"
+  }
+}
