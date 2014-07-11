@@ -7,6 +7,8 @@
  * @link https://github.com/yuanqing/interpolate
  */
 
+require_once dirname(__DIR__) . '/src/Interpolate.php';
+
 use yuanqing\Interpolate\Interpolate;
 
 class InterpolateTest extends PHPUnit_Framework_TestCase

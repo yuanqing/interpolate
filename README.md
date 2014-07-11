@@ -1,4 +1,4 @@
-# Interpolate.php [![Build Status](https://img.shields.io/travis/yuanqing/interpolate.svg)](https://travis-ci.org/yuanqing/interpolate) [![Coverage Status](https://img.shields.io/coveralls/yuanqing/interpolate.svg)](https://coveralls.io/r/yuanqing/interpolate)
+# Interpolate.php [![Build Status](https://img.shields.io/travis/yuanqing/interpolate.svg)](https://travis-ci.org/yuanqing/interpolate) [![Coverage Status](https://img.shields.io/coveralls/yuanqing/interpolate.svg)](https://coveralls.io/r/yuanqing/interpolate) [![Packagist Version](http://img.shields.io/packagist/v/yuanqing/interpolate.svg)](https://packagist.org/packages/yuanqing/interpolate)
 
 A small PHP package for interpolating values from an array into a template string.
 
@@ -47,29 +47,20 @@ var_dump($i->interpolate($tmpl, $data)); #=> 'Hello, World!'
 
 ## Installation
 
-Interpolate.php requires at least PHP 5.3.
+Interpolate.php requires at least **PHP 5.3**.
 
 ### Install with Composer
 
 1. Install [Composer](http://getcomposer.org/).
 
-2. Add `yuanqing/interpolate` to your `composer.json`:
+2. Install the [Interpolate.php Composer package](https://packagist.org/packages/yuanqing/syringe.php):
 
     ```
-    {
-      "require": {
-        "yuanqing/interpolate": "~1.0"
-      }
-    }
+    $ composer require yuanqing/interpolate ~1.0
+    $ composer update
     ```
 
-3. Install dependencies:
-
-    ```
-    $ composer install
-    ```
-
-4. Require the Composer autoloader:
+3. Require the Composer autoloader:
 
     ```php
     require_once __DIR__ . '/vendor/autoload.php';
