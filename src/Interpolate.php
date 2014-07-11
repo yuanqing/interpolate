@@ -46,7 +46,8 @@ class Interpolate
       $val = call_user_func($val, $this->data);
     }
     if (!$this->isString($val)) {
-      throw new \UnexpectedValueException(sprintf('Value corresponding to the key "%s" could not be converted to string', trim($matches[1])));
+      throw new \UnexpectedValueException(sprintf('Value corresponding to the key "%s" could not
+        be converted to string', trim($matches[1])));
     }
     return (string) $val;
   }
@@ -58,21 +59,21 @@ class Interpolate
    * $data = array('foo' => array('bar' => 'baz');
    * $keys = array('foo', 'bar');
    * var_dump($this->followPath($data, $keys)); #=> "baz"
-   *
    * @param array $data Array to get the value from
    * @param array $keys Series of keys to follow
-   * @return mixed
+   * @return mixed|null The value from $data corresponding to the path, or null if the path
+   *    doesn't exist
    */
-  private function followPath($data, array $keys)
+  private function followPath(array $data, array $keys)
   {
-    if (empty($keys)) {
-      return $data;
+    foreach ($keys as $key) {
+      $key = trim($key);
+      if (!isset($data[$key])) {
+        return null;
+      }
+      $data = $data[$key];
     }
-    $key = trim(array_shift($keys)); # get first key
-    if (!isset($data[$key])) { # key doesn't exist
-      return null;
-    }
-    return $this->followPath($data[$key], $keys);
+    return $data;
   }
 
   /**
