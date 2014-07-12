@@ -1,4 +1,4 @@
-# Interpolate.php [![Build Status](https://img.shields.io/travis/yuanqing/interpolate.svg)](https://travis-ci.org/yuanqing/interpolate) [![Coverage Status](https://img.shields.io/coveralls/yuanqing/interpolate.svg)](https://coveralls.io/r/yuanqing/interpolate) [![Packagist Version](http://img.shields.io/packagist/v/yuanqing/interpolate.svg)](https://packagist.org/packages/yuanqing/interpolate)
+# Interpolate.php [![Packagist Version](http://img.shields.io/packagist/v/yuanqing/interpolate.svg)](https://packagist.org/packages/yuanqing/interpolate) [![Build Status](https://img.shields.io/travis/yuanqing/interpolate.svg)](https://travis-ci.org/yuanqing/interpolate) [![Coverage Status](https://img.shields.io/coveralls/yuanqing/interpolate.svg)](https://coveralls.io/r/yuanqing/interpolate)
 
 A small PHP package for interpolating values from an array into a template string.
 
@@ -45,22 +45,23 @@ var_dump($i->interpolate($tmpl, $data)); #=> 'Hello, World!'
 
 (The two examples in this README may be found in the [`examples.php`](https://github.com/yuanqing/interpolate/blob/master/examples.php) file.)
 
-## Installation
+## Requirements
 
-Interpolate.php requires at least **PHP 5.3**.
+Interpolate.php requires at least **PHP 5.3**, or **HHVM**.
+
+## Installation
 
 ### Install with Composer
 
 1. Install [Composer](http://getcomposer.org/).
 
-2. Install the [Interpolate.php Composer package](https://packagist.org/packages/yuanqing/syringe.php):
+2. Install [the Interpolate.php Composer package](https://packagist.org/packages/yuanqing/interpolate.php):
 
     ```
     $ composer require yuanqing/interpolate ~1.0
-    $ composer update
     ```
 
-3. Require the Composer autoloader:
+3. In your PHP, require the Composer autoloader:
 
     ```php
     require_once __DIR__ . '/vendor/autoload.php';
@@ -76,7 +77,7 @@ Interpolate.php requires at least **PHP 5.3**.
 
     Or just [grab the zip](https://github.com/yuanqing/interpolate/archive/master.zip).
 
-2. Require [`Interpolate.php`](https://github.com/yuanqing/interpolate/blob/master/src/Interpolate.php):
+2. In your PHP, require [`Interpolate.php`](https://github.com/yuanqing/interpolate/blob/master/src/Interpolate.php):
 
     ```php
     require_once __DIR__ . '/src/Interpolate.php';
@@ -84,15 +85,13 @@ Interpolate.php requires at least **PHP 5.3**.
 
 ## Testing
 
-1. Install [PHPUnit](http://phpunit.de/).
+You need [PHPUnit](http://phpunit.de/) to run the tests:
 
-2. Clone this repository, then run `phpunit`:
-
-    ```
-    $ git clone https://github.com/yuanqing/interpolate
-    $ cd interpolate
-    $ phpunit
-    ```
+```
+$ git clone https://github.com/yuanqing/interpolate
+$ cd interpolate
+$ phpunit
+```
 
 ## License
 
