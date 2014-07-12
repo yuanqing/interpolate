@@ -55,7 +55,7 @@ Interpolate.php requires at least **PHP 5.3**, or **HHVM**.
 
 1. Install [Composer](http://getcomposer.org/).
 
-2. Install [the Interpolate.php Composer package](https://packagist.org/packages/yuanqing/interpolate.php):
+2. Install [the Interpolate.php Composer package](https://packagist.org/packages/yuanqing/interpolate):
 
     ```
     $ composer require yuanqing/interpolate ~1.0
