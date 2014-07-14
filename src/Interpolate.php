@@ -11,9 +11,12 @@ namespace yuanqing\Interpolate;
 
 class Interpolate
 {
-  private $data;
   private $regexPattern;
+  private $data;
 
+  /**
+   * @param boolean $doubleBrace Set to `true` if template tags are to be enclosed in double braces
+   */
   public function __construct($doubleBrace = false)
   {
     $this->regexPattern = $doubleBrace ? '/{{(.+?)}}/' : '/{(.+?)}/';
