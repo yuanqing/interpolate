@@ -18,7 +18,11 @@ var_dump($i->interpolate($tmpl, $data)); #=> 'Hello, World!'
 
 ## Usage
 
-1. Tags are enclosed in single braces.
+1. By default, tags are enclosed in single braces. To use double braces (*a la* Mustache), simply pass `true` to the constructor:
+
+    ```
+    $i = new \yuanqing\Interpolate\Interpolate(true);
+    ```
 
 2. Straight-up substitution; there are no conditional blocks, sections and so forth.
 
