@@ -12,6 +12,12 @@ namespace yuanqing\Interpolate;
 class Interpolate
 {
   private $data;
+  private $regexPattern;
+
+  public function __construct($doubleBrace = false)
+  {
+    $this->regexPattern = $doubleBrace ? '/{{(.+?)}}/' : '/{(.+?)}/';
+  }
 
   /**
    * Interpolates values from $data into the $tmpl string
@@ -28,7 +34,7 @@ class Interpolate
     }
     $tmpl = (string) $tmpl;
     $this->data = $data;
-    return preg_replace_callback('/{(.+?)}/', array($this, 'callback'), $tmpl);
+    return preg_replace_callback($this->regexPattern, array($this, 'callback'), $tmpl);
   }
 
   /**

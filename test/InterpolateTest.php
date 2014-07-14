@@ -41,15 +41,14 @@ class InterpolateTest extends PHPUnit_Framework_TestCase
   {
     $i = new Interpolate;
     $data = array();
-    $expected = '';
-    $this->assertEquals($i->interpolate(null, $data), $expected);
-    $this->assertEquals($i->interpolate('', $data), $expected);
+    $this->assertEquals($i->interpolate(null, $data), '');
+    $this->assertEquals($i->interpolate('', $data), '');
   }
 
   public function testEmptyData()
   {
     $i = new Interpolate;
-    $tmpl = '{ foo }{ bar.baz }';
+    $tmpl = '{ foo }';
     $this->assertEquals($i->interpolate($tmpl, array()), '');
     $this->assertEquals($i->interpolate($tmpl, array('foo' => null)), '');
   }
@@ -57,34 +56,42 @@ class InterpolateTest extends PHPUnit_Framework_TestCase
   public function testGlobalReplace()
   {
     $i = new Interpolate;
-    $tmpl = 'foo { foo } { foo } baz';
+    $tmpl = '{ foo } { foo }';
     $data = array(
       'foo' => 'bar',
     );
-    $expected = 'foo bar bar baz';
-    $this->assertEquals($i->interpolate($tmpl, $data), $expected);
+    $this->assertEquals($i->interpolate($tmpl, $data), 'bar bar');
   }
 
-  public function testObjectWithToString()
+  public function testDoubleBrace()
+  {
+    $i = new Interpolate(true);
+    $tmpl = '{{ foo }} {{ foo }}';
+    $data = array(
+      'foo' => 'bar',
+    );
+    $this->assertEquals($i->interpolate($tmpl, $data), 'bar bar');
+  }
+
+  public function testObjectValueWithToString()
   {
     $i = new Interpolate;
     $tmpl = '{ foo }';
     $data = array(
       'foo' => new SplFileInfo('bar') # SplFileInfo implements __toString()
     );
-    $expected = 'bar';
-    $this->assertEquals($i->interpolate($tmpl, $data), $expected);
+    $this->assertEquals($i->interpolate($tmpl, $data), 'bar');
   }
 
   /**
    * @expectedException UnexpectedValueException
    */
-  public function testObjectWithoutToString()
+  public function testObjectValueWithoutToString()
   {
     $i = new Interpolate;
     $tmpl = '{ foo }';
     $data = array(
-      'foo' => new StdClass
+      'foo' => new StdClass # StdClass does not implement __toString()
     );
     $i->interpolate($tmpl, $data);
   }
@@ -104,18 +111,7 @@ class InterpolateTest extends PHPUnit_Framework_TestCase
     $i->interpolate($tmpl, $data);
   }
 
-  public function testWhitespaceWithinKey()
-  {
-    $i = new Interpolate;
-    $tmpl = '{ foo bar }';
-    $data = array(
-      'foo bar' => 'baz'
-    );
-    $expected = 'baz';
-    $this->assertEquals($i->interpolate($tmpl, $data), $expected);
-  }
-
-  public function testFunctionInData()
+  public function testCallbackValue()
   {
     $i = new Interpolate;
     $data = array(
@@ -136,17 +132,42 @@ EOF;
     $this->assertEquals($i->interpolate($tmpl, $data), $expected);
   }
 
-  public function testDeepPropertyInterpolation()
+  public function testWhitespaceInKey()
   {
     $i = new Interpolate;
-    $tmpl = '{ foo.bar baz.0 }';
+    $tmpl = '{ foo bar }';
+    $data = array(
+      'foo bar' => 'baz'
+    );
+    $this->assertEquals($i->interpolate($tmpl, $data), 'baz');
+  }
+
+  public function testDeepProperty()
+  {
+    $i = new Interpolate;
+    $tmpl = '{ foo.bar.baz }';
     $data = array(
       'foo' => array(
-        'bar baz' => array('bang')
+        'bar' => array(
+          'baz' => 'qux'
+        )
       )
     );
-    $expected = 'bang';
-    $this->assertEquals($i->interpolate($tmpl, $data), $expected);
+    $this->assertEquals($i->interpolate($tmpl, $data), 'qux');
+  }
+
+  public function testDeepPropertyWithWhitespaceInKey()
+  {
+    $i = new Interpolate;
+    $tmpl = '{ foo.bar baz.qux }';
+    $data = array(
+      'foo' => array(
+        'bar baz' => array(
+          'qux' => 'quux'
+        )
+      )
+    );
+    $this->assertEquals($i->interpolate($tmpl, $data), 'quux');
   }
 
   public function testInconsistentWhitespace()
