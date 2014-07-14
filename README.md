@@ -62,7 +62,7 @@ Interpolate.php requires at least **PHP 5.3**, or **HHVM**.
 2. Install [the Interpolate.php Composer package](https://packagist.org/packages/yuanqing/interpolate):
 
     ```
-    $ composer require yuanqing/interpolate ~1.0
+    $ composer require yuanqing/interpolate ~1.1
     ```
 
 3. In your PHP, require the Composer autoloader:
