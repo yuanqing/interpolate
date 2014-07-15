@@ -15,14 +15,6 @@ class Interpolate
   private $data;
 
   /**
-   * @param boolean $doubleBrace Set to `true` if template tags are to be enclosed in double braces
-   */
-  public function __construct($doubleBrace = false)
-  {
-    $this->regexPattern = $doubleBrace ? '/{{(.+?)}}/' : '/{(.+?)}/';
-  }
-
-  /**
    * Interpolates values from $data into the $tmpl string
    *
    * @param string $tmpl The string to interpolate values into
@@ -30,14 +22,14 @@ class Interpolate
    * @return string
    * @throws InvalidArgumentException
    */
-  public function interpolate($tmpl, array $data)
+  public function render($tmpl, array $data)
   {
     if (!$this->isString($tmpl)) {
-      throw new \InvalidArgumentException('Template could not be converted to string');
+      throw new \InvalidArgumentException("Template could not be converted to string");
     }
     $tmpl = (string) $tmpl;
     $this->data = $data;
-    return preg_replace_callback($this->regexPattern, array($this, 'callback'), $tmpl);
+    return preg_replace_callback("/{{(.+?)}}/", array($this, "callback"), $tmpl);
   }
 
   /**
@@ -49,14 +41,14 @@ class Interpolate
    */
   private function callback($matches)
   {
-    $keys = explode('.', $matches[1]);
+    $keys = explode(".", $matches[1]);
     $val = $this->followPath($this->data, $keys);
     if (is_callable($val)) {
       $val = call_user_func($val, $this->data);
     }
     if (!$this->isString($val)) {
-      throw new \UnexpectedValueException(sprintf('Value corresponding to the key "%s" could not
-        be converted to string', trim($matches[1])));
+      throw new \UnexpectedValueException(sprintf("Value corresponding to the key "%s" could not
+        be converted to string", trim($matches[1])));
     }
     return (string) $val;
   }
@@ -65,8 +57,8 @@ class Interpolate
    * Get a value from $data by following the path specified by the series of keys in $keys
    *
    * @example
-   * $data = array('foo' => array('bar' => 'baz');
-   * $keys = array('foo', 'bar');
+   * $data = array("foo" => array("bar" => "baz");
+   * $keys = array("foo", "bar");
    * var_dump($this->followPath($data, $keys)); #=> "baz"
    * @param array $data Array to get the value from
    * @param array $keys Series of keys to follow
@@ -93,7 +85,7 @@ class Interpolate
    */
   private function isString($obj)
   {
-    return is_scalar($obj) || is_null($obj) || (is_object($obj) && method_exists($obj, '__toString'));
+    return is_scalar($obj) || is_null($obj) || (is_object($obj) && method_exists($obj, "__toString"));
   }
 
 }

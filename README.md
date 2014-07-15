@@ -6,23 +6,19 @@ Think of it as a lightweight alternative to [Mustache](https://github.com/bobthe
 
 ```php
 $i = new \yuanqing\Interpolate\Interpolate;
-$tmpl = '{foo.bar}, {foo.baz}!';
+$tmpl = "{{ foo.bar }}, {{ foo.baz }}!";
 $data = array(
-  'foo' => array(
-    'bar' => 'Hello',
-    'baz' => 'World'
+  "foo" => array(
+    "bar" => "Hello",
+    "baz" => "World"
   )
 );
-var_dump($i->interpolate($tmpl, $data)); #=> 'Hello, World!'
+var_dump($i->render($tmpl, $data)); #=> "Hello, World!"
 ```
 
 ## Usage
 
-1. By default, tags are enclosed in single braces. To use double braces (*a la* Mustache), simply pass `true` to the constructor:
-
-    ```
-    $i = new \yuanqing\Interpolate\Interpolate(true);
-    ```
+1. Tags are enclosed in double braces (*a la* Mustache).
 
 2. Straight-up substitution; there are no conditional blocks, sections and so forth.
 
@@ -32,15 +28,15 @@ var_dump($i->interpolate($tmpl, $data)); #=> 'Hello, World!'
 
     ```php
     $i = new \yuanqing\Interpolate\Interpolate;
-    $tmpl = '{baz}';
+    $tmpl = "{{ baz }}";
     $data = array(
-      'foo' => 'Hello',
-      'bar' => 'World',
-      'baz' => function($data) {
-        return sprintf('%s, %s!', $data['foo'], $data['bar']);
+      "foo" => "Hello",
+      "bar" => "World",
+      "baz" => function($data) {
+        return sprintf("%s, %s!", $data["foo"], $data["bar"]);
       }
     );
-    var_dump($i->interpolate($tmpl, $data)); #=> 'Hello, World!'
+    var_dump($i->render($tmpl, $data)); #=> "Hello, World!"
     ```
 
     Note that the first argument of the callback is the `$data` array.
@@ -62,13 +58,13 @@ Interpolate.php requires at least **PHP 5.3**, or **HHVM**.
 2. Install [the Interpolate.php Composer package](https://packagist.org/packages/yuanqing/interpolate):
 
     ```
-    $ composer require yuanqing/interpolate ~1.1
+    $ composer require yuanqing/interpolate ~1.2
     ```
 
 3. In your PHP, require the Composer autoloader:
 
     ```php
-    require_once __DIR__ . '/vendor/autoload.php';
+    require_once __DIR__ . "/vendor/autoload.php";
     ```
 
 ### Install manually
@@ -84,7 +80,7 @@ Interpolate.php requires at least **PHP 5.3**, or **HHVM**.
 2. In your PHP, require [`Interpolate.php`](https://github.com/yuanqing/interpolate/blob/master/src/Interpolate.php):
 
     ```php
-    require_once __DIR__ . '/src/Interpolate.php';
+    require_once __DIR__ . "/src/Interpolate.php";
     ```
 
 ## Testing
