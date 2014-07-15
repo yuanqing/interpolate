@@ -47,7 +47,7 @@ class Interpolate
       $val = call_user_func($val, $this->data);
     }
     if (!$this->isString($val)) {
-      throw new \UnexpectedValueException(sprintf("Value corresponding to the key "%s" could not
+      throw new \UnexpectedValueException(sprintf("Value corresponding to the key '%s' could not
         be converted to string", trim($matches[1])));
     }
     return (string) $val;
