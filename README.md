@@ -5,7 +5,7 @@ A small PHP package for interpolating values from an array into a template strin
 Think of it as a lightweight alternative to [Mustache](https://github.com/bobthecow/mustache.php):
 
 ```php
-$i = new \yuanqing\Interpolate\Interpolate;
+$i = new yuanqing\Interpolate\Interpolate;
 $tmpl = '{{ foo.bar }}, {{ foo.baz }}!';
 $data = array(
   'foo' => array(
@@ -27,7 +27,7 @@ var_dump($i->render($tmpl, $data)); #=> 'Hello, World!'
 4. A value to be interpolated can be a [scalar](http://php.net/manual/en/function.is-scalar.php), an object that implements `__toString()`, or a callback that returns a string:
 
     ```php
-    $i = new \yuanqing\Interpolate\Interpolate;
+    $i = new yuanqing\Interpolate\Interpolate;
     $tmpl = '{{ baz }}';
     $data = array(
       'foo' => 'Hello',
