@@ -1,7 +1,7 @@
 {
   "name": "yuanqing/interpolate",
   "description": "Simple string interpolation in PHP.",
-  "keywords": ["string", "interpolate", "interpolation", "string"],
+  "keywords": ["regex", "string", "interpolate", "interpolation"],
   "homepage": "https://github.com/yuanqing/interpolate",
   "license": "MIT",
   "authors": [

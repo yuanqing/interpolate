@@ -11,7 +11,6 @@ namespace yuanqing\Interpolate;
 
 class Interpolate
 {
-  private $regexPattern;
   private $data;
 
   /**
@@ -24,8 +23,8 @@ class Interpolate
    */
   public function render($tmpl, array $data)
   {
-    if (!$this->isString($tmpl)) {
-      throw new \InvalidArgumentException('Template could not be converted to string');
+    if (!is_string($tmpl)) {
+      throw new \InvalidArgumentException('Template must be a string');
     }
     $tmpl = (string) $tmpl;
     $this->data = $data;
@@ -33,7 +32,7 @@ class Interpolate
   }
 
   /**
-   * The callback for preg_replace_callback
+   * The callback for preg_replace_callback in the render method
    *
    * @param array $matches
    * @return string
@@ -46,15 +45,16 @@ class Interpolate
     if (is_callable($val)) {
       $val = call_user_func($val, $this->data);
     }
-    if (!$this->isString($val)) {
+    if (!$this->canCastToString($val)) {
       throw new \UnexpectedValueException(sprintf('Value corresponding to the key \'%s\' could not
-        be converted to string', trim($matches[1])));
+        be cast to string', trim($matches[1])));
     }
     return (string) $val;
   }
 
   /**
-   * Get a value from $data by following the path specified by the series of keys in $keys
+   * Gets a value from the $data array by following the path specified by the series of keys
+   * in $keys
    *
    * @example
    * $data = array('foo' => array('bar' => 'baz');
@@ -78,14 +78,17 @@ class Interpolate
   }
 
   /**
-   * Returns true if $obj can be converted to string
+   * Returns true if $obj can be cast to string
    *
    * @param mixed $obj
    * @return boolean
    */
-  private function isString($obj)
+  private function canCastToString($obj)
   {
-    return is_scalar($obj) || is_null($obj) || (is_object($obj) && method_exists($obj, '__toString'));
+    if (is_scalar($obj) || is_null($obj)) {
+      return true;
+    }
+    return is_object($obj) && method_exists($obj, '__toString');
   }
 
 }

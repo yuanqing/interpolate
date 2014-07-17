@@ -4,7 +4,7 @@
  *
  * @author Lim Yuan Qing <hello@yuanqing.sg>
  * @license MIT
- * @link https://github.com/yuanqing/render
+ * @link https://github.com/yuanqing/interpolate
  */
 
 require_once dirname(__DIR__) . '/src/Interpolate.php';
@@ -19,7 +19,7 @@ class InterpolateTest extends PHPUnit_Framework_TestCase
   public function testInvalidTemplateArgument()
   {
     $i = new Interpolate;
-    $tmpl = array();
+    $tmpl = null;
     $data = array(
       'foo' => 'bar'
     );
@@ -41,7 +41,6 @@ class InterpolateTest extends PHPUnit_Framework_TestCase
   {
     $i = new Interpolate;
     $data = array();
-    $this->assertEquals($i->render(null, $data), '');
     $this->assertEquals($i->render('', $data), '');
   }
 
