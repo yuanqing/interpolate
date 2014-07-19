@@ -29,7 +29,7 @@ $i->render($tmpl, $data); #=> 'Hello, World!'
 4. A value to be interpolated can be a [scalar](http://php.net/manual/en/function.is-scalar.php), an object that implements `__toString()`, or a callback that returns a string:
 
     ```php
-    $i = new yuanqing\Interpolate\Interpolate;
+    $i = new Interpolate;
     $tmpl = '{{ baz }}';
     $data = array(
       'foo' => 'Hello',
@@ -38,7 +38,7 @@ $i->render($tmpl, $data); #=> 'Hello, World!'
         return sprintf('%s, %s!', $data['foo'], $data['bar']);
       }
     );
-    var_dump($i->render($tmpl, $data)); #=> 'Hello, World!'
+    $i->render($tmpl, $data); #=> 'Hello, World!'
     ```
 
     Note that the first argument of the callback is the `$data` array.
