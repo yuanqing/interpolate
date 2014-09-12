@@ -1,7 +1,12 @@
 {
   "name": "yuanqing/interpolate",
   "description": "Simple string interpolation in PHP.",
-  "keywords": ["regex", "string", "interpolate", "interpolation"],
+  "keywords": [
+    "regex",
+    "string",
+    "interpolate",
+    "interpolation"
+  ],
   "homepage": "https://github.com/yuanqing/interpolate",
   "license": "MIT",
   "authors": [
@@ -17,5 +22,12 @@
   },
   "require": {
     "php": ">=5.3"
+  },
+  "require-dev": {
+    "satooshi/php-coveralls": "dev-master"
+  },
+  "scripts": {
+    "test": "phpunit",
+    "cover": "phpunit --coverage-html ./coverage --stderr ./php"
   }
 }

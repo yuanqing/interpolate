@@ -1,4 +1,4 @@
-# Interpolate.php [![Packagist Version](http://img.shields.io/packagist/v/yuanqing/interpolate.svg)](https://packagist.org/packages/yuanqing/interpolate) [![Build Status](https://img.shields.io/travis/yuanqing/interpolate.svg)](https://travis-ci.org/yuanqing/interpolate) [![Coverage Status](https://img.shields.io/coveralls/yuanqing/interpolate.svg)](https://coveralls.io/r/yuanqing/interpolate)
+# Interpolate.php [![Packagist Version](http://img.shields.io/packagist/v/yuanqing/interpolate.svg?style=flat)](https://packagist.org/packages/yuanqing/interpolate) [![Build Status](https://img.shields.io/travis/yuanqing/interpolate.svg?style=flat)](https://travis-ci.org/yuanqing/interpolate) [![Coverage Status](https://img.shields.io/coveralls/yuanqing/interpolate.svg?style=flat)](https://coveralls.io/r/yuanqing/interpolate)
 
 A small PHP package for interpolating values from an array into a template string.
 
@@ -59,7 +59,7 @@ Interpolate.php requires at least **PHP 5.3**, or **HHVM**.
 
 2. Install [the Interpolate.php Composer package](https://packagist.org/packages/yuanqing/interpolate):
 
-    ```
+    ```bash
     $ composer require yuanqing/interpolate ~1.2
     ```
 
@@ -73,7 +73,7 @@ Interpolate.php requires at least **PHP 5.3**, or **HHVM**.
 
 1. Clone this repository:
 
-    ```
+    ```bash
     $ git clone https://github.com/yuanqing/interpolate
     ```
 
@@ -89,7 +89,7 @@ Interpolate.php requires at least **PHP 5.3**, or **HHVM**.
 
 You need [PHPUnit](http://phpunit.de/) to run the tests:
 
-```
+```bash
 $ git clone https://github.com/yuanqing/interpolate
 $ cd interpolate
 $ phpunit
